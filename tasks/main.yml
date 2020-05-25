@@ -1,0 +1,11 @@
+---
+- import_tasks: mount.yml
+- import_tasks: cache.yml
+  when: desktop_set_cache
+- import_tasks: repo.yml
+- import_tasks: deb.yml
+- import_tasks: snap.yml
+- import_tasks: docker.yml
+- import_tasks: cups.yml
+- import_tasks: sudoers.yml
+- import_tasks: display.yml

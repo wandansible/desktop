@@ -1,0 +1,9 @@
+---
+- name: Configure sudoers
+  template:
+    src: sudoers/sudoers
+    dest: /etc/sudoers.d/{{ item.key }}
+    owner: root
+    group: root
+    mode: u=r,g=r,o=
+  with_items: "{{ sudoers | dict2items }}"

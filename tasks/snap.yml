@@ -1,0 +1,8 @@
+---
+- name: Install useful snap packages
+  snap:
+    name: "{{ item.name }}"
+    channel: "{{ item.channel | default('stable') }}"
+    classic: "{{ item.classic | default('no') }}"
+    state: present
+  with_items: "{{ useful_snap_packages }}"

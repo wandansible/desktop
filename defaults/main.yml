@@ -1,0 +1,23 @@
+---
+storage_mounts: []
+useful_repos: []
+useful_deb_packages: []
+useful_snap_packages: []
+docker_daemon: {}
+cups_client: {}
+sudoers: {}
+
+desktop_env: ubuntu-desktop
+desktop_dm: gdm3
+desktop_dms:
+  gdm3:
+    path: /usr/sbin/gdm3
+    file: /etc/gdm3/greeter.dconf-defaults
+  sddm:
+    path: /usr/bin/sddm
+    file: /etc/sddm.conf
+  lightdm:
+    path: /usr/sbin/lightdm
+    file: /etc/lightdm/lightdm.conf
+desktop_dm_config: {}
+desktop_set_cache: false

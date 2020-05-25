@@ -1,0 +1,24 @@
+---
+- name: Install desktop environment
+  apt:
+    name: "{{ desktop_env }}"
+    state: present
+
+- name: Install display manager
+  apt:
+    name: "{{ desktop_dm }}"
+    state: present
+
+- name: Configure display manager
+  template:
+    src: display/dm.conf
+    dest: "{{ desktop_dms[desktop_dm].file }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Set display manager
+  copy:
+    content: "{{ desktop_dms[desktop_dm].path }}\n"
+    dest: /etc/X11/default-display-manager
+  notify: apply display manager
