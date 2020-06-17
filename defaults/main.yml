@@ -1,7 +1,5 @@
 ---
 storage_mounts: []
-useful_repos: []
-useful_deb_packages: []
 useful_snap_packages: []
 docker_daemon: {}
 cups_client: {}
