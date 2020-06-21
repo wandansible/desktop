@@ -4,6 +4,14 @@
     name: cups-client
     state: present
 
+- name: Create cups config directory
+  file:
+    state: directory
+    path: /etc/cups
+    owner: root
+    group: lp
+    mode: u=rwx,g=rx,o=rx
+
 - name: Configure cups client
   template:
     src: cups/client.conf
