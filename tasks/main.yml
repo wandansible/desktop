@@ -1,5 +1,4 @@
 ---
-- import_tasks: mount.yml
 - import_tasks: cache.yml
   when: desktop_set_cache
 - import_tasks: snap.yml

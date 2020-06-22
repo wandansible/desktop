@@ -1,5 +1,4 @@
 ---
-storage_mounts: []
 useful_snap_packages: []
 docker_daemon: {}
 cups_client: {}
