@@ -2,6 +2,7 @@
 - name: Install desktop environment
   apt:
     name: "{{ desktop_env }}"
+    install_recommends: true
     state: present
 
 - name: Install display manager

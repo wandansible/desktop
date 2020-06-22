@@ -6,7 +6,7 @@ cups_client: {}
 sudoers: {}
 
 desktop_env: ubuntu-desktop
-desktop_dm: gdm3
+desktop_dm: "{{ desktop_env_default_dms[desktop_env] }}"
 desktop_dms:
   gdm3:
     path: /usr/sbin/gdm3
@@ -17,5 +17,14 @@ desktop_dms:
   lightdm:
     path: /usr/sbin/lightdm
     file: /etc/lightdm/lightdm.conf
-desktop_dm_config: {}
+desktop_dm_config: "{{ desktop_dm_configs[desktop_dm] }}"
+desktop_dm_configs: {}
+desktop_env_default_dms:
+  ubuntu-desktop: gdm3
+  kubuntu-desktop: sddm
+  ubuntu-mate-desktop: lightdm
+  ubuntu-budgie-desktop: lightdm
+  xubuntu-desktop: lightdm
+  lubuntu-desktop: sddm
+
 desktop_set_cache: false
