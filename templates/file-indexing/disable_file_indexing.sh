@@ -18,4 +18,6 @@ if [ ! -d "${CONFIG_DIR}" ]; then
   mkdir -p "${CONFIG_DIR}"
 fi
 
-echo -e "[Basic Settings]\nIndexing-Enabled=false" > "${CONFIG_DIR}/baloofilerc"
+if [ ! -f "${CONFIG_DIR}/baloofilerc" ]; then
+  echo -e "[Basic Settings]\nIndexing-Enabled=false" > "${CONFIG_DIR}/baloofilerc"
+fi
