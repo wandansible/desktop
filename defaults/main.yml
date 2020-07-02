@@ -27,3 +27,9 @@ desktop_env_default_dms:
   lubuntu-desktop: sddm
 
 desktop_set_cache: false
+desktop_disable_file_indexing: false
+desktop_tracker_services:
+  - tracker-extract.service
+  - tracker-miner-fs.service
+  - tracker-store.service
+  - tracker-writeback.service

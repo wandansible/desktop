@@ -1,6 +1,8 @@
 ---
 - import_tasks: cache.yml
   when: desktop_set_cache
+- import_tasks: file-indexing.yml
+  when: desktop_disable_file_indexing
 - import_tasks: snap.yml
 - import_tasks: docker.yml
 - import_tasks: cups.yml
