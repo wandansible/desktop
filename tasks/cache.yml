@@ -16,3 +16,5 @@
       dest: /etc/profile.d/xdg.cache.sh
     - src: cache/slack.cache.sh
       dest: /etc/profile.d/slack.cache.sh
+  loop_control:
+    label: "{{ item.dest }}"

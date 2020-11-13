@@ -6,3 +6,5 @@
     classic: "{{ item.classic | default('no') }}"
     state: present
   loop: "{{ useful_snap_packages }}"
+  loop_control:
+    label: "{{ item.name }}"

@@ -7,3 +7,5 @@
     group: root
     mode: u=r,g=r,o=
   loop: "{{ sudoers | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
