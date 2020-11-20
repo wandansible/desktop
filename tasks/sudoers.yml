@@ -6,4 +6,6 @@
     owner: root
     group: root
     mode: u=r,g=r,o=
-  with_items: "{{ sudoers | dict2items }}"
+  loop: "{{ sudoers | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"

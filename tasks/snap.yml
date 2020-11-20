@@ -5,4 +5,6 @@
     channel: "{{ item.channel | default('stable') }}"
     classic: "{{ item.classic | default('no') }}"
     state: present
-  with_items: "{{ useful_snap_packages }}"
+  loop: "{{ useful_snap_packages }}"
+  loop_control:
+    label: "{{ item.name }}"

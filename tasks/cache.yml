@@ -11,8 +11,10 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  with_items:
+  loop:
     - src: cache/xdg.cache.sh
       dest: /etc/profile.d/xdg.cache.sh
     - src: cache/slack.cache.sh
       dest: /etc/profile.d/slack.cache.sh
+  loop_control:
+    label: "{{ item.dest }}"
