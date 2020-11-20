@@ -1,3 +1,4 @@
 ---
 - name: apply display manager
-  command: dpkg-reconfigure -f noninteractive {{ desktop_dm }}
+  command:
+    cmd: dpkg-reconfigure -f noninteractive {{ desktop_dm }}
