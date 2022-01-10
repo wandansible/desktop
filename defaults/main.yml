@@ -1,6 +1,5 @@
 ---
 useful_snap_packages: []
-cups_client: {}
 sudoers: {}
 
 desktop_env: ubuntu-desktop
