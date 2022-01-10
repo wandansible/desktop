@@ -4,6 +4,5 @@
 - import_tasks: file-indexing.yml
   when: desktop_disable_file_indexing
 - import_tasks: snap.yml
-- import_tasks: cups.yml
 - import_tasks: sudoers.yml
 - import_tasks: display.yml
