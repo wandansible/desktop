@@ -9,6 +9,11 @@
     name: "{{ desktop_dm }}"
     state: present
 
+- name: Remove gnome-initial-setup
+  ansible.builtin.apt:
+    name: gnome-initial-setup
+    state: absent
+
 - name: Configure display manager
   template:
     src: display/dm.conf
