@@ -4,6 +4,20 @@
     name: bindfs
     state: present
 
+- name: Set capabilities for fusermount
+  community.general.capabilities:
+    path: /usr/bin/fusermount
+    capability: cap_sys_admin+ep
+    state: present
+
+- name: Remove setuid bit from fusermount
+  ansible.builtin.file:
+    path: /usr/bin/fusermount
+    state: file
+    owner: root
+    group: root
+    mode: u-s
+
 - name: Configure user caches
   template:
     src: "{{ item.src }}"
