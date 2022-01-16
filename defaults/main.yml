@@ -31,3 +31,8 @@ desktop_tracker_services:
   - tracker-miner-fs.service
   - tracker-store.service
   - tracker-writeback.service
+
+desktop_browser_snaps:
+  - firefox
+  - chromium
+  - chromium-ffmpeg

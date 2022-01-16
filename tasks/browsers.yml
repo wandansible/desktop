@@ -1,0 +1,17 @@
+---
+
+- name: Remove firefox apt package
+  ansible.builtin.apt:
+    pkg:
+      - firefox
+      - firefox-locale-en
+    purge: yes
+    state: absent
+
+- name: Install browsers from snap
+  community.general.snap:
+    name: "{{ item }}"
+    channel: stable
+    classic: no
+    state: present
+  loop: "{{ desktop_browser_snaps }}"
