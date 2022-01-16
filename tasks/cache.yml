@@ -2,6 +2,7 @@
 - name: Install bindfs
   apt:
     name: bindfs
+    install_recommends: no
     state: present
 
 - name: Set capabilities for fusermount
