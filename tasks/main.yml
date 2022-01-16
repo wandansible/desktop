@@ -7,3 +7,4 @@
 - import_tasks: sudoers.yml
 - import_tasks: display.yml
 - import_tasks: browsers.yml
+- import_tasks: printing.yml
