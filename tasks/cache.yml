@@ -33,3 +33,19 @@
       dest: /etc/profile.d/slack.cache.sh
   loop_control:
     label: "{{ item.dest }}"
+
+- name: Create local desktop entry directory
+  ansible.builtin.file:
+    path: /usr/local/share/applications
+    state: directory
+    owner: root
+    group: root
+    mode: u=rxw,g=rx,o=rx
+
+- name: Configure vscode to install extensions in user caches
+  ansible.builtin.template:
+    src: cache/code.desktop
+    dest: /usr/local/share/applications/code.desktop
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
