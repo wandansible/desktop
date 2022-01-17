@@ -1,0 +1,41 @@
+---
+- name: Install packages for printers
+  ansible.builtin.apt:
+    name:
+      - cups
+      - smbclient
+    install_recommends: no
+    state: present
+
+- name: Update samba workgroup
+  ansible.builtin.lineinfile:
+    path: /etc/samba/smb.conf
+    regexp: '^\s*workgroup\s*=\s*'
+    insertafter: '^\s*\[global\]'
+    line: "   workgroup = {{ samba_workgroup }}"
+    state: present
+
+- name: Check if printers have been added
+  ansible.builtin.find:
+    paths: /etc/cups
+    patterns: printers.conf
+    file_type: file
+    contains: <Printer {{ item.name }}>
+  loop: "{{ desktop_printers }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: _printers_check
+
+- name: Add printers to cups
+  ansible.builtin.command:
+    cmd: >-
+      /usr/sbin/lpadmin
+      -p "{{ item.name }}"
+      -E -v "{{ item.uri }}"
+      -m "{{ item.driver | default('drv:///sample.drv/generic.ppd') }}"
+      -o auth-info-required=username,password
+  loop: "{{ desktop_printers }}"
+  loop_control:
+    index_var: index
+    label: "{{ item.name }}"
+  when: _printers_check.results[index].matched == 0

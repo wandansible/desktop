@@ -36,3 +36,5 @@ desktop_browser_snaps:
   - firefox
   - chromium
   - chromium-ffmpeg
+
+samba_workgroup: WORKPLACE
