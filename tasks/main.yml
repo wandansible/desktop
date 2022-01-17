@@ -6,3 +6,4 @@
 - import_tasks: snap.yml
 - import_tasks: sudoers.yml
 - import_tasks: display.yml
+- import_tasks: browsers.yml
