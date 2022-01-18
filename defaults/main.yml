@@ -19,6 +19,7 @@ desktop_dm_configs: {}
 desktop_env_default_dms:
   ubuntu-desktop: gdm3
   kubuntu-desktop: sddm
+  plasma-desktop: sddm
   ubuntu-mate-desktop: lightdm
   ubuntu-budgie-desktop: lightdm
   xubuntu-desktop: lightdm
