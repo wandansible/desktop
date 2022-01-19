@@ -1,0 +1,30 @@
+---
+
+- name: Add dropbox apt signing key
+  ansible.builtin.apt_key:
+    url: https://linux.dropbox.com/fedora/rpm-public-key.asc
+    id: "{{ desktop_dropbox_apt_key_fingerprint }}"
+    keyring: /usr/share/keyrings/dropbox.gpg
+    state: present
+
+- name: Add dropbox apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/dropbox.gpg] https://linux.dropbox.com/ubuntu disco main"
+    filename: dropbox
+    update_cache: yes
+    state: present
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/default/dropbox-repo
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+
+- name: Install dropbox
+  ansible.builtin.apt:
+    pkg: dropbox
+    state: present

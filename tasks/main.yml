@@ -8,3 +8,4 @@
 - import_tasks: display.yml
 - import_tasks: browsers.yml
 - import_tasks: printing.yml
+- import_tasks: dropbox.yml
