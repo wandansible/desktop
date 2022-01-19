@@ -5,15 +5,25 @@
     install_recommends: no
     state: present
 
+- name: Resolve path to fusermount binary
+  ansible.builtin.stat:
+    path: /usr/bin/fusermount
+  register: _fusermount_bin
+
+- name: Set fusermount bin path when a symlink
+  ansible.builtin.set_fact:
+    fusermount_symlink_path: "{{ _fusermount_bin.stat.lnk_source }}"
+  when: _fusermount_bin.stat.islnk
+
 - name: Set capabilities for fusermount
   community.general.capabilities:
-    path: /usr/bin/fusermount
+    path: "{{ fusermount_symlink_path | default('/usr/bin/fusermount') }}"
     capability: cap_sys_admin+ep
     state: present
 
 - name: Remove setuid bit from fusermount
   ansible.builtin.file:
-    path: /usr/bin/fusermount
+    path: "{{ fusermount_symlink_path | default('/usr/bin/fusermount') }}"
     state: file
     owner: root
     group: root
