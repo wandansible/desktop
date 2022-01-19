@@ -21,6 +21,7 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+  notify: restart display manager
 
 - name: Set display manager
   copy:

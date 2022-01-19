@@ -2,3 +2,8 @@
 - name: apply display manager
   command:
     cmd: dpkg-reconfigure -f noninteractive {{ desktop_dm }}
+
+- name: restart display manager
+  ansible.builtin.systemd:
+    name: "{{ desktop_dm }}"
+    state: restarted
