@@ -1,5 +1,8 @@
 # {{ ansible_managed }}
 
+# Exit if run as root
+[ "$(id -u)" -eq 0 ] && return 0
+
 # could be more paranoid, and not accept any previously defined XDG_CACHE_HOME
 if [ -z "${XDG_CACHE_HOME}" ] ; then
     XDG_CACHE_HOME="/var/tmp/xdgcache-${USER}"

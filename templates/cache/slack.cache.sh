@@ -1,5 +1,11 @@
 # {{ ansible_managed }}
 
+# Exit if run as root
+[ "$(id -u)" -eq 0 ] && return 0
+
+# Exit if there isn't a DISPLAY attached
+[ -z "${DISPLAY}" ] && return 0
+
 SLACK_CACHE_SRC="${HOME}/.config/Slack/Cache"
 SLACK_CACHE_HOME="/var/tmp/slackcache-${USER}"
 
