@@ -36,4 +36,7 @@
   ansible.builtin.copy:
     content: "{{ desktop_dms[desktop_dm].path }}\n"
     dest: /etc/X11/default-display-manager
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   notify: apply display manager
