@@ -1,11 +1,11 @@
 ---
 - name: Install desktop environment
-  apt:
+  ansible.builtin.apt:
     name: "{{ desktop_env }}"
     state: present
 
 - name: Install display manager
-  apt:
+  ansible.builtin.apt:
     name: "{{ desktop_dm }}"
     state: present
 
@@ -24,7 +24,7 @@
   notify: restart display manager
 
 - name: Configure display manager
-  template:
+  ansible.builtin.template:
     src: display/dm.conf
     dest: "{{ desktop_dms[desktop_dm].file }}"
     owner: root
@@ -33,7 +33,10 @@
   notify: restart display manager
 
 - name: Set display manager
-  copy:
+  ansible.builtin.copy:
     content: "{{ desktop_dms[desktop_dm].path }}\n"
     dest: /etc/X11/default-display-manager
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   notify: apply display manager
