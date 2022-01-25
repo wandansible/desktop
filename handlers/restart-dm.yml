@@ -1,0 +1,35 @@
+---
+- name: Get active loginctl sessions
+  ansible.builtin.command:
+    cmd: loginctl -o json list-sessions
+  register: _loginctl_sessions
+  changed_when: false
+  listen: restart display manager
+
+- name: Get active loginctl session details
+  ansible.builtin.command:
+    cmd: "loginctl show-session {{ item.session }} --property=Class --property=Type"
+  loop: "{{ _loginctl_sessions.stdout | from_json }}"
+  loop_control:
+    label: "session {{ item.session }} for user {{ item.user }}"
+  register: _loginctl_session_details
+  changed_when: false
+  listen: restart display manager
+
+- name: Get active x11 user sessions
+  ansible.builtin.set_fact:
+    _loginctl_x11_sessions: "{{ _loginctl_session_details |
+                                community.general.json_query(
+                                  'results[?contains(stdout_lines, `Type=x11`) &&
+                                            contains(stdout_lines, `Class=user`)
+                                          ].item.session'
+                                )
+                             }}"
+  listen: restart display manager
+
+- name: Restart display manager service
+  ansible.builtin.systemd:
+    name: "{{ desktop_dm }}"
+    state: restarted
+  when: "_loginctl_x11_sessions | length == 0"
+  listen: restart display manager
