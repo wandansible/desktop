@@ -2,5 +2,5 @@
 - ansible.builtin.import_tasks: restart-dm.yml
 
 - name: apply display manager
-  command:
+  ansible.builtin.command:
     cmd: dpkg-reconfigure -f noninteractive {{ desktop_dm }}
