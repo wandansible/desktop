@@ -9,7 +9,7 @@
 - name: Add slack apt repository
   ansible.builtin.apt_repository:
     repo: deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
-    filename: slack
+    filename: slack-desktop
     update_cache: yes
     state: present
 
