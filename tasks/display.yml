@@ -14,6 +14,15 @@
     name: gnome-initial-setup
     state: absent
 
+- name: Configure Xsession
+  ansible.builtin.template:
+    src: display/Xsession
+    dest: /etc/X11/Xsession
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  notify: restart display manager
+
 - name: Configure display manager
   template:
     src: display/dm.conf
