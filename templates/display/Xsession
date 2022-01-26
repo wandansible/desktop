@@ -59,7 +59,7 @@ USERXSESSION=$HOME/.xsession
 USERXSESSIONRC=$HOME/.xsessionrc
 ALTUSERXSESSION=$HOME/.Xsession
 
-# Redirect error log to journald
+# Redirect session log to journald
 exec > >(systemd-cat -t "xsession-${USER}") 2>&1
 
 echo "$PROGNAME: X session started for $LOGNAME at $(date)"
