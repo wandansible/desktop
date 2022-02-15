@@ -39,6 +39,7 @@
   loop:
     - xdg.cache.sh
     - slack.cache.sh
+    - pulseaudio.state.sh
     - disable_file_indexing.sh
 
 - name: Create systemd user environment generator directory
@@ -58,6 +59,7 @@
     mode: u=rwx,g=rx,o=rx
   loop:
     - xdg.cache.sh
+    - pulseaudio.state.sh
 
 - name: Create local desktop entry directory
   ansible.builtin.file:
