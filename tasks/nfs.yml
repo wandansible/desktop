@@ -31,20 +31,15 @@
 
 - name: Add profile environment scripts
   ansible.builtin.template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: "profile.d/{{ item }}"
+    dest: "/etc/profile.d/{{ item }}"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
   loop:
-    - src: profile.d/xdg.cache.sh
-      dest: /etc/profile.d/xdg.cache.sh
-    - src: profile.d/slack.cache.sh
-      dest: /etc/profile.d/slack.cache.sh
-    - src: profile.d/disable_file_indexing.sh
-      dest: /etc/profile.d/disable_file_indexing.sh
-  loop_control:
-    label: "{{ item.dest }}"
+    - xdg.cache.sh
+    - slack.cache.sh
+    - disable_file_indexing.sh
 
 - name: Create local desktop entry directory
   ansible.builtin.file:
