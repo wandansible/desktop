@@ -1,8 +1,6 @@
 ---
-- import_tasks: cache.yml
-  when: desktop_set_cache
-- import_tasks: file-indexing.yml
-  when: desktop_disable_file_indexing
+- import_tasks: nfs.yml
+  when: desktop_nfs_home
 - import_tasks: snap.yml
 - import_tasks: sudoers.yml
 - import_tasks: display.yml

@@ -25,8 +25,7 @@ desktop_env_default_dms:
   xubuntu-desktop: lightdm
   lubuntu-desktop: sddm
 
-desktop_set_cache: false
-desktop_disable_file_indexing: false
+desktop_nfs_home: false
 desktop_tracker_services:
   - tracker-extract.service
   - tracker-miner-fs.service

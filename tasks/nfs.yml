@@ -1,6 +1,6 @@
 ---
 - name: Install bindfs
-  apt:
+  ansible.builtin.apt:
     name: bindfs
     install_recommends: no
     state: present
@@ -29,18 +29,20 @@
     group: root
     mode: u-s
 
-- name: Configure user caches
-  template:
+- name: Add profile environment scripts
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
   loop:
-    - src: cache/xdg.cache.sh
+    - src: profile.d/xdg.cache.sh
       dest: /etc/profile.d/xdg.cache.sh
-    - src: cache/slack.cache.sh
+    - src: profile.d/slack.cache.sh
       dest: /etc/profile.d/slack.cache.sh
+    - src: profile.d/disable_file_indexing.sh
+      dest: /etc/profile.d/disable_file_indexing.sh
   loop_control:
     label: "{{ item.dest }}"
 
@@ -52,9 +54,9 @@
     group: root
     mode: u=rxw,g=rx,o=rx
 
-- name: Configure vscode to install extensions in user caches
+- name: Configure vscode to install extensions in XDG_CACHE_HOME
   ansible.builtin.template:
-    src: cache/code.desktop
+    src: applications/code.desktop
     dest: /usr/local/share/applications/code.desktop
     owner: root
     group: root

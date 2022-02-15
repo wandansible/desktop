@@ -1,8 +1,0 @@
----
-- name: Disable file indexing
-  template:
-    src: file-indexing/disable_file_indexing.sh
-    dest: /etc/profile.d/disable_file_indexing.sh
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
