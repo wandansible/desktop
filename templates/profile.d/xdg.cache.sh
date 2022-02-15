@@ -3,20 +3,17 @@
 # Exit if run as root
 [ "$(id -u)" -eq 0 ] && return 0
 
-# could be more paranoid, and not accept any previously defined XDG_CACHE_HOME
-if [ -z "${XDG_CACHE_HOME}" ] ; then
-    XDG_CACHE_HOME="/var/tmp/xdgcache-${USER}"
-    export XDG_CACHE_HOME
-fi
+xdg_cache_local_path="/var/tmp/xdgcache-${USER}"
 
-if [ -d "${XDG_CACHE_HOME}" ]; then
+if [ -d "${xdg_cache_local_path}" ]; then
     # verify existing dir is suitable
-    if [ ! -G "${XDG_CACHE_HOME}" ] || [ ! -w "${XDG_CACHE_HOME}" ]; then
+    if [ ! -G "${xdg_cache_local_path}" ] || [ ! -w "${xdg_cache_local_path}" ]; then
         # else, make a new/secure one with mktemp
-        XDG_CACHE_HOME="$(mktemp -d "${XDG_CACHE_HOME}-XXXXXX")"
-        export XDG_CACHE_HOME
+        xdg_cache_local_path="$(mktemp -d "${xdg_cache_local_path}-XXXXXX")"
     fi
 else
-    mkdir -p "${XDG_CACHE_HOME}"
-    chmod 700 "${XDG_CACHE_HOME}"
+    mkdir -p "${xdg_cache_local_path}"
+    chmod 700 "${xdg_cache_local_path}"
 fi
+
+export XDG_CACHE_HOME="${xdg_cache_local_path}"
