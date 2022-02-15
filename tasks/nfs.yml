@@ -41,6 +41,24 @@
     - slack.cache.sh
     - disable_file_indexing.sh
 
+- name: Create systemd user environment generator directory
+  ansible.builtin.file:
+    path: /etc/systemd/user-environment-generators
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+
+- name: Add systemd user environment generators
+  ansible.builtin.template:
+    src: "systemd/generators/{{ item }}"
+    dest: "/etc/systemd/user-environment-generators/{{ item }}"
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  loop:
+    - xdg.cache.sh
+
 - name: Create local desktop entry directory
   ansible.builtin.file:
     path: /usr/local/share/applications
