@@ -17,9 +17,9 @@ while IFS= read -r line; do
     dst_dir="$(echo "${line}" | cut -d'=' -f 2- | xargs echo | envsubst)"
 
     if ${unmount_bind_mounts}; then
-        if mountpoint "${src_dir}" >/dev/null; then
+        if mount_status=$(mountpoint "${src_dir}" 2>&1); then
             fusermount -u "${src_dir}"
-        elif mountpoint "${src_dir}" | grep -qi "transport endpoint is not connected"; then
+        elif echo "${mount_status}" | grep -qi "transport endpoint is not connected"; then
             fusermount -u "${src_dir}"
         fi
     else
