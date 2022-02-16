@@ -1,6 +1,6 @@
 ---
 - name: Install useful snap packages
-  snap:
+  community.general.snap:
     name: "{{ item.name }}"
     channel: "{{ item.channel | default('stable') }}"
     classic: "{{ item.classic | default('no') }}"
