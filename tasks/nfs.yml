@@ -42,6 +42,14 @@
     - pulseaudio.state.sh
     - disable_file_indexing.sh
 
+- name: Disable and mask file indexing systemd user units globally
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: no
+    masked: yes
+    scope: global
+  loop: "{{ desktop_tracker_services }}"
+
 - name: Create systemd user environment generator directory
   ansible.builtin.file:
     path: /etc/systemd/user-environment-generators
