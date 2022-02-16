@@ -38,7 +38,6 @@
     mode: u=rw,g=r,o=r
   loop:
     - xdg.cache.sh
-    - slack.cache.sh
     - pulseaudio.state.sh
     - disable_file_indexing.sh
 
