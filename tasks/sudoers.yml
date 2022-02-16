@@ -1,6 +1,6 @@
 ---
 - name: Configure sudoers
-  template:
+  ansible.builtin.template:
     src: sudoers/sudoers
     dest: /etc/sudoers.d/{{ item.key }}
     owner: root

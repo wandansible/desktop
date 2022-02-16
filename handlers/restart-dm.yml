@@ -28,7 +28,7 @@
   listen: restart display manager
 
 - name: Restart display manager service
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: "{{ desktop_dm }}"
     state: restarted
   when: "_loginctl_x11_sessions | length == 0"
