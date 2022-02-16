@@ -31,6 +31,11 @@ desktop_tracker_services:
   - tracker-miner-fs.service
   - tracker-store.service
   - tracker-writeback.service
+desktop_bind_mounts:
+  - src: ${HOME}/.config/Slack/Cache
+    dst: /var/tmp/slackcache-${USER}/Cache
+  - src: ${HOME}/.config/Slack/GPUCache
+    dst: /var/tmp/slackcache-${USER}/GPUCache
 
 desktop_browser_snaps:
   - firefox

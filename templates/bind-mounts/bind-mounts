@@ -1,0 +1,53 @@
+#!/bin/bash
+# {{ ansible_managed }}
+
+set -euo pipefail
+
+unmount_bind_mounts=false
+if [ "$#" -eq 1 ] && [ "$1" == "--unmount" ]; then
+    unmount_bind_mounts=true
+fi
+
+while IFS= read -r line; do
+    if [[ ! "$line" =~ ^[^#]*= ]]; then
+      continue
+    fi
+
+    src_dir="$(echo "${line}" | cut -d'=' -f 1 | xargs echo | envsubst)"
+    dst_dir="$(echo "${line}" | cut -d'=' -f 2- | xargs echo | envsubst)"
+
+    if ${unmount_bind_mounts}; then
+        if mountpoint "${src_dir}" >/dev/null; then
+            fusermount -u "${src_dir}"
+        elif mountpoint "${src_dir}" | grep -qi "transport endpoint is not connected"; then
+            fusermount -u "${src_dir}"
+        fi
+    else
+        if [ -d "${dst_dir}" ]; then
+            # verify existing dir is suitable
+            if [ ! -G "${dst_dir}" ] || [ ! -w "${dst_dir}" ]; then
+                # else, make a new/secure one with mktemp
+                dst_dir="$(mktemp -d "${dst_dir}-XXXXXX")"
+            fi
+        else
+            mkdir -p "${dst_dir}"
+            chmod 700 "${dst_dir}"
+        fi
+
+        if ! mount_status=$(mountpoint "${src_dir}" 2>&1); then
+            if echo "${mount_status}" | grep -qi "transport endpoint is not connected"; then
+                fusermount -u "${src_dir}"
+            fi
+
+            if [ ! -d "${src_dir}" ]; then
+                mkdir -p "${src_dir}"
+                chmod 700 "${src_dir}"
+            fi
+
+            if [ -z "$(ls -A "${src_dir}")" ]; then
+                # only mount if source directory is empty
+                bindfs -o no-allow-other "${dst_dir}" "${src_dir}"
+            fi
+        fi
+    fi
+done < "/etc/bind-mounts.conf"
