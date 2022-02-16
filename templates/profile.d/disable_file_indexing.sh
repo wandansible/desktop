@@ -6,9 +6,6 @@
 # Exit if there isn't a DISPLAY attached
 [ -z "${DISPLAY}" ] && return 0
 
-### Disable tracker file indexing ###
-systemctl --user mask {{ desktop_tracker_services | join(" ") }} 2> /dev/null
-
 if [ -x "/usr/bin/tracker" ]; then
     /usr/bin/tracker daemon -t > /dev/null
 fi
