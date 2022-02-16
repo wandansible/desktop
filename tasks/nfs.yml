@@ -69,6 +69,16 @@
     - xdg.cache.sh
     - pulseaudio.state.sh
 
+- name: Configure dconf user profile
+  ansible.builtin.lineinfile:
+    path: "/etc/dconf/profile/user"
+    regexp: "^service-db:keyfile/user$"
+    line: "service-db:keyfile/user"
+    create: yes
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+
 - name: Create local desktop entry directory
   ansible.builtin.file:
     path: /usr/local/share/applications
