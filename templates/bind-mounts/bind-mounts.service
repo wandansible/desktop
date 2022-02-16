@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Local filesystem bind mounts
+ConditionUser=!root
+ConditionUser=!@system
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/bind-mounts
+ExecStop=/usr/local/bin/bind-mounts --unmount
+
+[Install]
+WantedBy=default.target

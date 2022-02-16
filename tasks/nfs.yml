@@ -29,6 +29,45 @@
     group: root
     mode: u-s
 
+- name: Add bind-mounts script
+  ansible.builtin.template:
+    src: "bind-mounts/bind-mounts"
+    dest: "/usr/local/bin/bind-mounts"
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+
+- name: Add bind-mounts configuration
+  ansible.builtin.template:
+    src: "bind-mounts/bind-mounts.conf"
+    dest: "/etc/bind-mounts.conf"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Create systemd user directory
+  ansible.builtin.file:
+    path: /etc/systemd/user
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+
+- name: Add bind-mounts systemd user unit
+  ansible.builtin.template:
+    src: "bind-mounts/bind-mounts.service"
+    dest: "/etc/systemd/user/bind-mounts.service"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Enable bind-mounts systemd user unit globally
+  ansible.builtin.systemd:
+    name: "bind-mounts.service"
+    enabled: yes
+    masked: no
+    scope: global
+
 - name: Add profile environment scripts
   ansible.builtin.template:
     src: "profile.d/{{ item }}"
@@ -38,7 +77,6 @@
     mode: u=rw,g=r,o=r
   loop:
     - xdg.cache.sh
-    - slack.cache.sh
     - pulseaudio.state.sh
     - disable_file_indexing.sh
 
