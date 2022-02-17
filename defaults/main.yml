@@ -36,6 +36,8 @@ desktop_bind_mounts:
     dst: /var/tmp/slackcache-${USER}/Cache
   - src: ${HOME}/.config/Slack/GPUCache
     dst: /var/tmp/slackcache-${USER}/GPUCache
+  - src: ${HOME}/.dropbox-dist
+    dst: /var/tmp/dropbox-${USER}/dist
 
 desktop_browser_snaps:
   - firefox
