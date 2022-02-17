@@ -63,10 +63,29 @@ while IFS= read -r line; do
                 create_directory "${src_dir}"
             fi
 
-            if [ -z "$(ls -A "${src_dir}")" ]; then
-                # only mount if source directory is empty
-                mount_bindfs "${src_dir}" "${dst_dir}"
+            if [ -n "$(ls -A "${src_dir}")" ]; then
+                # source directory isn't empty, migrate contents to destination directory
+                echo "${src_dir} isn't empty, migrating contents to ${dst_dir}"
+
+                if [ -n "$(ls -A "${dst_dir}")" ]; then
+                    # destination directory isn't empty, move it out of the way
+                    old_dst_dir="${dst_dir}.old"
+
+                    echo "${dst_dir} isn't empty, moving it to ${old_dst_dir}"
+
+                    if [ -d "${old_dst_dir}" ]; then
+                        rm -r "${old_dst_dir}"
+                    fi
+
+                    mv "${dst_dir}" "${old_dst_dir}"
+                    create_directory "${dst_dir}"
+                fi
+
+                mv -T "${src_dir}" "${dst_dir}"
+                create_directory "${src_dir}"
             fi
+
+            mount_bindfs "${src_dir}" "${dst_dir}"
         fi
     fi
 done < "/etc/bind-mounts.conf"
