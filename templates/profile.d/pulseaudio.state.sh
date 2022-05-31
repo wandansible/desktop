@@ -18,3 +18,4 @@ fi
 
 export PULSE_CONFIG_PATH="${pulseaudio_local_path}"
 export PULSE_STATE_PATH="${pulseaudio_local_path}"
+export PULSE_COOKIE="${pulseaudio_local_path}/cookie"

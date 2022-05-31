@@ -10,3 +10,7 @@ fi
 if [ -n "${PULSE_STATE_PATH}" ]; then
     echo "PULSE_STATE_PATH=${PULSE_STATE_PATH}"
 fi
+
+if [ -n "${PULSE_COOKIE}" ]; then
+    echo "PULSE_COOKIE=${PULSE_COOKIE}"
+fi
