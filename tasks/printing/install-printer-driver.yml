@@ -1,0 +1,39 @@
+---
+- name: Download printer driver
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ _printer_driver_download_dir }}/ppd/{{ item.name }}\
+      {{ item.file_extension | default('.ppd') }}"
+    checksum: "{{ item.checksum_type | default('sha256') }}:{{ item.checksum }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  vars:
+    _printer_driver_download_dir: "{{ '/usr/local/src' if item.extract_file is defined else '/usr/local/share' }}"
+
+- when: item.extract_file is defined
+  block:
+    - name: Create extraction directory for printer driver
+      ansible.builtin.file:
+        path: /usr/local/src/ppd/{{ item.name }}
+        state: directory
+        owner: root
+        group: root
+
+    - name: Extract printer driver
+      ansible.builtin.unarchive:
+        src: /usr/local/src/ppd/{{ item.name }}{{ item.file_extension | default(".ppd") }}
+        remote_src: true
+        dest: /usr/local/src/ppd/{{ item.name }}
+        creates: /usr/local/src/ppd/{{ item.name }}/{{ item.extract_file }}
+        owner: root
+        group: root
+
+    - name: Copy printer driver to printer drivers directory
+      ansible.builtin.copy:
+        src: /usr/local/src/ppd/{{ item.name }}/{{ item.extract_file }}
+        remote_src: true
+        dest: /usr/local/share/ppd/{{ item.name }}.ppd
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r

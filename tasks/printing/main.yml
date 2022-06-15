@@ -1,0 +1,56 @@
+---
+- name: Install packages for printers
+  ansible.builtin.apt:
+    name:
+      - cups
+      - smbclient
+    install_recommends: no
+    state: present
+
+- name: Ensure cupsd is running
+  ansible.builtin.service:
+    name: cups
+    state: started
+
+- name: Update samba workgroup
+  ansible.builtin.lineinfile:
+    path: /etc/samba/smb.conf
+    regexp: '^\s*workgroup\s*=\s*'
+    insertafter: '^\s*\[global\]'
+    line: "   workgroup = {{ samba_workgroup }}"
+    state: present
+
+- name: Create printer drivers directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  loop:
+    - /usr/local/share/ppd
+    - /usr/local/src/ppd
+
+- name: Install printer drivers
+  ansible.builtin.include_tasks:
+    file: install-printer-driver.yml
+  loop: "{{ desktop_printer_drivers }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Add printers to cups
+  ansible.builtin.command:
+    cmd: >-
+      /usr/sbin/lpadmin
+      -p "{{ item.name }}"
+      -E -v "{{ item.uri }}"
+      -m "{{ item.driver | default(desktop_default_printer_driver) }}"
+      -o "auth-info-required={{ item.auth | default(desktop_default_printer_auth) }}"
+      -o "PageSize={{ item.page_size | default(desktop_default_printer_page_size) }}"
+      {% if item.model is defined %}
+      -o "Model={{ item.model }}"
+      {% endif %}
+  loop: "{{ desktop_printers }}"
+  loop_control:
+    label: "{{ item.name }}"
+  changed_when: false
