@@ -5,6 +5,6 @@
 - ansible.builtin.import_tasks: sudoers.yml
 - ansible.builtin.import_tasks: display.yml
 - ansible.builtin.import_tasks: browsers.yml
-- ansible.builtin.import_tasks: printing.yml
+- ansible.builtin.import_tasks: printing/main.yml
 - ansible.builtin.import_tasks: dropbox.yml
 - ansible.builtin.import_tasks: slack.yml
