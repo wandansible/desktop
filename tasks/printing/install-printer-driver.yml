@@ -19,6 +19,7 @@
         state: directory
         owner: root
         group: root
+        mode: u=rwx,g=rx,o=rx
 
     - name: Extract printer driver
       ansible.builtin.unarchive:
