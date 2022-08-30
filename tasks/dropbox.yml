@@ -1,15 +1,31 @@
 ---
 
+- name: Remove old dropbox apt repository entry
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch=amd64 signed-by=/usr/share/keyrings/dropbox.gpg]
+      https://linux.dropbox.com/ubuntu disco main
+    filename: dropbox
+    update_cache: no
+    state: absent
+
+- name: Remove dropbox apt signing key from /usr/share/keyrings
+  ansible.builtin.file:
+    path: /usr/share/keyrings/dropbox.gpg
+    state: absent
+
 - name: Add dropbox apt signing key
   ansible.builtin.apt_key:
     url: https://linux.dropbox.com/fedora/rpm-public-key.asc
     id: "{{ desktop_dropbox_apt_key_fingerprint }}"
-    keyring: /usr/share/keyrings/dropbox.gpg
+    keyring: /etc/apt/keyrings/dropbox.gpg
     state: present
 
 - name: Add dropbox apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/dropbox.gpg] https://linux.dropbox.com/ubuntu disco main"
+    repo: >-
+      deb [arch=amd64 signed-by=/etc/apt/keyrings/dropbox.gpg]
+      https://linux.dropbox.com/ubuntu disco main
     filename: dropbox
     update_cache: yes
     state: present

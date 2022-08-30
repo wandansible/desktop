@@ -1,4 +1,5 @@
 ---
+- ansible.builtin.import_tasks: apt.yml
 - ansible.builtin.import_tasks: nfs.yml
   when: desktop_nfs_home
 - ansible.builtin.import_tasks: snap.yml

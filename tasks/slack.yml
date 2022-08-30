@@ -1,14 +1,30 @@
 ---
+- name: Remove old slack apt repository entry
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [signed-by=/usr/share/keyrings/slack.gpg]
+      https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+    filename: slack-desktop
+    update_cache: no
+    state: absent
+
+- name: Remove slack apt signing key from /usr/share/keyrings
+  ansible.builtin.file:
+    path: /usr/share/keyrings/slack.gpg
+    state: absent
+
 - name: Add slack apt signing key
   ansible.builtin.apt_key:
     url: https://packagecloud.io/slacktechnologies/slack/gpgkey
     id: "{{ desktop_slack_apt_key_fingerprint }}"
-    keyring: /usr/share/keyrings/slack.gpg
+    keyring: /etc/apt/keyrings/slack.gpg
     state: present
 
 - name: Add slack apt repository
   ansible.builtin.apt_repository:
-    repo: deb [signed-by=/usr/share/keyrings/slack.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+    repo: >-
+      deb [signed-by=/etc/apt/keyrings/slack.gpg]
+      https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
     filename: slack-desktop
     update_cache: yes
     state: present
