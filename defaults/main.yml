@@ -14,8 +14,10 @@ desktop_dms:
   lightdm:
     path: /usr/sbin/lightdm
     file: /etc/lightdm/lightdm.conf
-desktop_dm_config: "{{ desktop_dm_configs[desktop_dm] }}"
-desktop_dm_configs: {}
+desktop_dm_configs:
+  gdm3: {}
+  sddm: {}
+  lightdm: {}
 desktop_env_default_dms:
   ubuntu-desktop: gdm3
   kubuntu-desktop: sddm
