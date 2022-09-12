@@ -1,5 +1,4 @@
 ---
-
 - name: Remove old dropbox apt repository entry
   ansible.builtin.apt_repository:
     repo: >-
