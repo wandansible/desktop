@@ -2,10 +2,10 @@
 - name: Configure sudoers
   ansible.builtin.template:
     src: sudoers/sudoers
-    dest: /etc/sudoers.d/{{ item.key }}
+    dest: /etc/sudoers.d/{{ item.file }}
     owner: root
     group: root
     mode: u=r,g=r,o=
-  loop: "{{ sudoers | dict2items }}"
+  loop: "{{ sudoers }}"
   loop_control:
-    label: "{{ item.key }}"
+    label: "{{ item.file }}"

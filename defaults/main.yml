@@ -1,6 +1,6 @@
 ---
 snap_packages_install: []
-sudoers: {}
+sudoers: []
 
 desktop_env: ubuntu-desktop
 desktop_dm: "{{ (desktop_env_default_dms | selectattr('env', 'equalto', desktop_env) | first).dm }}"
