@@ -1,5 +1,5 @@
 ---
-useful_snap_packages: []
+snap_packages_install: []
 sudoers: {}
 
 desktop_env: ubuntu-desktop
