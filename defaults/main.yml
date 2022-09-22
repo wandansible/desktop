@@ -4,16 +4,16 @@ sudoers: {}
 
 desktop_env: ubuntu-desktop
 desktop_dm: "{{ (desktop_env_default_dms | selectattr('env', 'equalto', desktop_env) | first).dm }}"
-desktop_dms:
-  gdm3:
-    path: /usr/sbin/gdm3
-    file: /etc/gdm3/greeter.dconf-defaults
-  sddm:
-    path: /usr/bin/sddm
-    file: /etc/sddm.conf
-  lightdm:
-    path: /usr/sbin/lightdm
-    file: /etc/lightdm/lightdm.conf
+desktop_dm_paths:
+  - dm: gdm3
+    binary: /usr/sbin/gdm3
+    config_file: /etc/gdm3/greeter.dconf-defaults
+  - dm: sddm
+    binary: /usr/bin/sddm
+    config_file: /etc/sddm.conf
+  - dm: lightdm
+    binary: /usr/sbin/lightdm
+    config_file: /etc/lightdm/lightdm.conf
 desktop_dm_configs:
   gdm3: {}
   sddm: {}
