@@ -3,7 +3,7 @@ useful_snap_packages: []
 sudoers: {}
 
 desktop_env: ubuntu-desktop
-desktop_dm: "{{ desktop_env_default_dms[desktop_env] }}"
+desktop_dm: "{{ (desktop_env_default_dms | selectattr('env', 'equalto', desktop_env) | first).dm }}"
 desktop_dms:
   gdm3:
     path: /usr/sbin/gdm3
@@ -19,13 +19,20 @@ desktop_dm_configs:
   sddm: {}
   lightdm: {}
 desktop_env_default_dms:
-  ubuntu-desktop: gdm3
-  kubuntu-desktop: sddm
-  plasma-desktop: sddm
-  ubuntu-mate-desktop: lightdm
-  ubuntu-budgie-desktop: lightdm
-  xubuntu-desktop: lightdm
-  lubuntu-desktop: sddm
+  - env: ubuntu-desktop
+    dm: gdm3
+  - env: kubuntu-desktop
+    dm: sddm
+  - env: plasma-desktop
+    dm: sddm
+  - env: ubuntu-mate-desktop
+    dm: lightdm
+  - env: ubuntu-budgie-desktop
+    dm: lightdm
+  - env: xubuntu-desktop
+    dm: lightdm
+  - env: lubuntu-desktop
+    dm: sddm
 
 desktop_nfs_home: false
 desktop_tracker_services:
