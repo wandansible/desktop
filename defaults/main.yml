@@ -15,9 +15,12 @@ desktop_dm_paths:
     binary: /usr/sbin/lightdm
     config_file: /etc/lightdm/lightdm.conf
 desktop_dm_configs:
-  gdm3: {}
-  sddm: {}
-  lightdm: {}
+  - dm: gdm3
+    config: {}
+  - dm: sddm
+    config: {}
+  - dm: lightdm
+    config: {}
 desktop_env_default_dms:
   - env: ubuntu-desktop
     dm: gdm3
