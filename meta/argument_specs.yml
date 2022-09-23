@@ -1,0 +1,218 @@
+---
+argument_specs:
+  main:
+    short_description: Setup a desktop environment
+    description: |
+      Install and configure a desktop environment:
+      install up to date browsers via snap,
+      install slack and dropbox,
+      configure printers,
+      manage sudoers to allow desktop owner to run some commands with sudo,
+      and apply optimisations to make NFS home mounts work.
+    options:
+      snap_packages_install:
+        description: List of snap packages to install
+        type: list
+        elements: dict
+        options:
+          name:
+            description: Name of snap package
+            type: str
+            required: true
+          channel:
+            description: The release that is installed and tracked for updates
+            type: str
+            default: stable
+          classic:
+            description: If true, put the snap in classic mode and disable security confinement
+            type: bool
+            default: false
+
+      sudoers:
+        description: Configuration for sudoers
+        type: list
+        elements: dict
+        options:
+          file:
+            description: Name for file in the sudoers.d directory
+            type: str
+            required: true
+          contents:
+            description: Contents for the sudoers file
+            type: str
+            required: true
+
+      desktop_env:
+        description: |
+          Desktop environment to install and use.
+          Use 'tasksel --list-tasks' to get list of possible desktop environments.
+        type: str
+        default: ubuntu-desktop
+
+      desktop_dm:
+        description: Desktop display manager to install and configure
+        type: str
+
+      desktop_dm_paths:
+        description: List of display managers and their paths
+        type: list
+        elements: dict
+        options:
+          dm:
+            description: Display manager
+            type: str
+            required: true
+          binary:
+            description: Path to display manager binary
+            type: str
+            required: true
+          config_file:
+            description: Path to display manager configuration
+            type: str
+            required: true
+
+      desktop_dm_configs:
+        description: Configuration for each display manager
+        type: list
+        elements: dict
+        options:
+          dm:
+            description: Display manager
+            type: str
+            required: true
+          config:
+            description:
+              - Configuration for the display manager
+              - Top-level = name of the section
+              - Second-level = options and their values
+            type: dict
+            required: true
+
+      desktop_env_default_dms:
+        description: List of desktop environments and their default display managers
+        type: list
+        elements: dict
+        options:
+          env:
+            description: Desktop environment
+            type: str
+            required: true
+          dm:
+            description: Default display manager
+            type: str
+            required: true
+
+      desktop_nfs_home:
+        description: If true, apply NFS home mount optimisations
+        type: bool
+        default: false
+
+      desktop_tracker_services:
+        description: |
+          List of GNOME File Indexing systemd services
+          to disable when NFS optimisations are enabled
+        type: list
+        elements: str
+
+      desktop_bind_mounts:
+        description: |
+          Local home filesystem bind mounts
+          to move individual directories off NFS
+        type: list
+        elements: dict
+        options:
+          src:
+            description: Path for bind mount source
+            type: str
+            required: true
+          dst:
+            description: Path for bind mount destination
+            type: str
+            required: true
+
+      desktop_browser_snaps:
+        description: List of browser snap packages to install
+        type: list
+        elements: str
+        default:
+          - firefox
+          - chromium
+          - chromium-ffmpeg
+
+      desktop_printers:
+        description: List of printers to configure
+        type: list
+        elements: dict
+        options:
+          name:
+            description: Name of the printer
+            type: str
+            required: true
+          uri:
+            description: URI for the printer
+            type: str
+            required: true
+          page_size:
+            description: Default page size
+            type: str
+            default: A4
+          driver:
+            description: Driver path (use paths from the command 'lpinfo -m')
+            type: str
+            default: everywhere
+          model:
+            description: Additional model name if the driver supports multiple models
+            type: str
+          auth:
+            description: Authentication required for printing
+            type: str
+            default: none
+
+      desktop_printer_drivers:
+        description: List of printer drivers to download and install
+        type: list
+        elements: dict
+        options:
+          name:
+            description: Name of the driver
+            type: str
+            required: true
+          url:
+            description: URL for the driver
+            type: str
+            required: true
+          file_extension:
+            description: File extension added to the driver
+            type: str
+            default: .ppd
+          checksum:
+            description: Checksum of the driver
+            type: str
+            required: true
+          checksum_type:
+            description: Type of checksum
+            type: str
+            default: sha256
+          extract_file:
+            description: Path for the file to extract if the driver is compressed
+            type: str
+
+      samba_workgroup:
+        description: The samba workgroup
+        type: str
+        default: WORKPLACE
+
+      desktop_dropbox_apt_key_fingerprint:
+        description: The apt key fingerprint for the dropbox repo
+        type: str
+
+      desktop_slack_apt_key_fingerprint:
+        description: The apt key fingerprint for the slack repo
+        type: str
+
+      desktop_slack_parameters:
+        description: Configuration for the slack defaults file
+        type: dict
+        default:
+          repo_add_once: "false"
+          repo_reenable_on_distupgrade: "false"

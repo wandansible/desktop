@@ -58,27 +58,7 @@ desktop_browser_snaps:
   - chromium
   - chromium-ffmpeg
 
-# List of dicts for printers.
-# The dicts must have the following structure:
-# {
-#   name: <name>        # Name of the printer (required)
-#   uri: <uri>          # URI for the printer (required)
-#   page_size: <size>   # Default page size (default: A4)
-#   driver: <driver>    # Driver path from `lpinfo -m` (default: everywhere)
-#   model: <model>      # Additional model name if driver supports mutiple models (optional)
-#   auth: <auth>        # Authentication required for printing (default: none)
-# }
 desktop_printers: []
-# List of dicts for printer drivers.
-# The dicts must have the following structure:
-# {
-#   name: <name>                 # Name of the driver (required)
-#   url: <url>                   # URL for downloading the driver (required)
-#   file_extension: <extension>  # File extension added to downloaded file (default: .ppd)
-#   checksum: <checksum>         # Checksum of downloaded file (required)
-#   checksum_type: <type>        # Type of checksum (default: sha256)
-#   extract_file: <path>         # If download is compressed, set this to extract file (optional)
-# }
 desktop_printer_drivers: []
 samba_workgroup: WORKPLACE
 
