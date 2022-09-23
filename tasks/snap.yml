@@ -5,6 +5,6 @@
     channel: "{{ item.channel | default('stable') }}"
     classic: "{{ item.classic | default('no') }}"
     state: present
-  loop: "{{ useful_snap_packages }}"
+  loop: "{{ snap_packages_install }}"
   loop_control:
     label: "{{ item.name }}"

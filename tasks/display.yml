@@ -26,7 +26,7 @@
 - name: Configure display manager
   ansible.builtin.template:
     src: display/dm.conf
-    dest: "{{ desktop_dms[desktop_dm].file }}"
+    dest: "{{ (desktop_dm_paths | selectattr('dm', 'equalto', desktop_dm) | first).config_file }}"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
@@ -34,7 +34,7 @@
 
 - name: Set display manager
   ansible.builtin.copy:
-    content: "{{ desktop_dms[desktop_dm].path }}\n"
+    content: "{{ (desktop_dm_paths | selectattr('dm', 'equalto', desktop_dm) | first).binary }}\n"
     dest: /etc/X11/default-display-manager
     owner: root
     group: root
