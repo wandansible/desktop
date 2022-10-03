@@ -3,9 +3,11 @@
 - ansible.builtin.import_tasks: nfs.yml
   when: desktop_nfs_home
 - ansible.builtin.import_tasks: snap.yml
+  when: ansible_distribution == "Ubuntu"
 - ansible.builtin.import_tasks: sudoers.yml
 - ansible.builtin.import_tasks: display.yml
 - ansible.builtin.import_tasks: browsers.yml
+  when: ansible_distribution == "Ubuntu"
 - ansible.builtin.import_tasks: printing/main.yml
   when: desktop_printers | length >= 1
 - ansible.builtin.import_tasks: dropbox.yml

@@ -2,7 +2,7 @@
 snap_packages_install: []
 sudoers: []
 
-desktop_env: ubuntu-desktop
+desktop_env: "{{ 'ubuntu-desktop' if ansible_distribution == 'Ubuntu' else 'gnome-desktop' }}"
 desktop_dm: "{{ (desktop_env_default_dms | selectattr('env', 'equalto', desktop_env) | first).dm }}"
 desktop_dm_paths:
   - dm: gdm3
@@ -22,6 +22,8 @@ desktop_dm_configs:
   - dm: lightdm
     config: {}
 desktop_env_default_dms:
+  - env: gnome-desktop
+    dm: gdm3
   - env: ubuntu-desktop
     dm: gdm3
   - env: kubuntu-desktop

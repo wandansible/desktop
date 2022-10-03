@@ -1,8 +1,15 @@
 ---
-- name: Install desktop environment
+- name: Install desktop environment metapackage on Ubuntu
   ansible.builtin.apt:
     name: "{{ desktop_env }}"
     state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install desktop environment metapackage on Debian
+  ansible.builtin.apt:
+    name: "task-{{ desktop_env }}"
+    state: present
+  when: ansible_distribution == "Debian"
 
 - name: Install display manager
   ansible.builtin.apt:

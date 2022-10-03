@@ -46,8 +46,8 @@ argument_specs:
         description: |
           Desktop environment to install and use.
           Use 'tasksel --list-tasks' to get list of possible desktop environments.
+          Defaults to ubuntu-desktop on Ubuntu and gnome-desktop on Debian.
         type: str
-        default: ubuntu-desktop
 
       desktop_dm:
         description: Desktop display manager to install and configure
