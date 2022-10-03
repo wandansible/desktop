@@ -102,6 +102,23 @@ argument_specs:
             type: str
             required: true
 
+      desktop_env_sessions:
+        description: List of desktop environments and their session names
+        type: list
+        elements: dict
+        options:
+          env:
+            description: Desktop environment
+            type: str
+            required: true
+          session:
+            description: |
+                Session name
+                (where name is the name of the session .desktop file from
+                /usr/share/xsessions/*.desktop)
+            type: str
+            required: true
+
       desktop_nfs_home:
         description: If true, apply NFS home mount optimisations
         type: bool

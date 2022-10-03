@@ -36,6 +36,23 @@ desktop_env_default_dms:
     dm: lightdm
   - env: lubuntu-desktop
     dm: sddm
+desktop_env_sessions:
+  - env: gnome-desktop
+    session: gnome
+  - env: ubuntu-desktop
+    session: ubuntu
+  - env: kubuntu-desktop
+    session: plasma
+  - env: plasma-desktop
+    session: plasma
+  - env: ubuntu-mate-desktop
+    session: mate
+  - env: ubuntu-budgie-desktop
+    session: budgie-desktop
+  - env: xubuntu-desktop
+    session: xubuntu
+  - env: lubuntu-desktop
+    session: Lubuntu
 
 desktop_nfs_home: false
 desktop_tracker_services:
