@@ -80,8 +80,10 @@ desktop_printer_drivers: []
 samba_workgroup: WORKPLACE
 
 desktop_dropbox_apt_key_fingerprint: 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
+desktop_dropbox_install: false
 
 desktop_slack_apt_key_fingerprint: DB085A08CA13B8ACB917E0F6D938EC0D038651BD
 desktop_slack_parameters:
   repo_add_once: "false"
   repo_reenable_on_distupgrade: "false"
+desktop_slack_install: false

@@ -8,4 +8,6 @@
 - ansible.builtin.import_tasks: browsers.yml
 - ansible.builtin.import_tasks: printing/main.yml
 - ansible.builtin.import_tasks: dropbox.yml
+  when: desktop_dropbox_install
 - ansible.builtin.import_tasks: slack.yml
+  when: desktop_slack_install

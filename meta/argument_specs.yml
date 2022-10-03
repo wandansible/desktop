@@ -223,6 +223,11 @@ argument_specs:
         description: The apt key fingerprint for the dropbox repo
         type: str
 
+      desktop_dropbox_install:
+        description: If true, install dropbox
+        type: bool
+        default: false
+
       desktop_slack_apt_key_fingerprint:
         description: The apt key fingerprint for the slack repo
         type: str
@@ -233,3 +238,8 @@ argument_specs:
         default:
           repo_add_once: "false"
           repo_reenable_on_distupgrade: "false"
+
+      desktop_slack_install:
+        description: If true, install slack
+        type: bool
+        default: false
