@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include wandansible.desktop"
+      ansible.builtin.include_role:
+        name: "wandansible.desktop"
+      vars:
+        desktop_browser_snaps: []
