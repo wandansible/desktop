@@ -9,7 +9,7 @@
 - name: Get active loginctl session details
   ansible.builtin.command:
     cmd: "loginctl show-session {{ item.session }} --property=Class --property=Type"
-  loop: "{{ _loginctl_sessions.stdout | from_json }}"
+  loop: "{{ _loginctl_sessions.stdout | default('[]', true) | from_json }}"
   loop_control:
     label: "session {{ item.session }} for user {{ item.user }}"
   register: _loginctl_session_details
@@ -25,6 +25,7 @@
                                           ].item.session'
                                 )
                              }}"
+  when: "_loginctl_session_details"
   listen: restart display manager
 
 - name: Restart display manager service
