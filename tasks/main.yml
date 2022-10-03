@@ -7,6 +7,7 @@
 - ansible.builtin.import_tasks: display.yml
 - ansible.builtin.import_tasks: browsers.yml
 - ansible.builtin.import_tasks: printing/main.yml
+  when: desktop_printers | length >= 1
 - ansible.builtin.import_tasks: dropbox.yml
   when: desktop_dropbox_install
 - ansible.builtin.import_tasks: slack.yml
